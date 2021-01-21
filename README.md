@@ -1,6 +1,6 @@
 # Login-System-Laravel
 
-## Step
+## Step (initialize) 
 * command : composer create-project --prefer-dist laravel/laravel "folder name"
 * example: composer create-project --prefer-dist laravel/laravel login-system-laravel 
 
