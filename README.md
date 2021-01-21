@@ -3,7 +3,7 @@
 ## Step (initialize) 
 * command : composer create-project --prefer-dist laravel/laravel "folder name"
 * example: composer create-project --prefer-dist laravel/laravel login-system-laravel 
-* command : composer intall
+* command : composer install
 
 ## VS-code to Github
 ### command
