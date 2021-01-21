@@ -2,4 +2,4 @@
 
 
 command : composer create-project --prefer-dist laravel/laravel "folder name"
-ex: composer create-project --prefer-dist laravel/laravel login-system-laravel 
+example: composer create-project --prefer-dist laravel/laravel login-system-laravel 
