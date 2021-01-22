@@ -10,3 +10,4 @@
 * git remote add "name" https://github.com/saapit/git-repo.git
 *example : git remote add origin https://github.com/saapit/login-system-laravel.git
 * git remote -v
+* git push -u origin master
