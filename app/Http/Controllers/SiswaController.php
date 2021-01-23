@@ -12,9 +12,14 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_siswa = \App\Siswa::all();
+        // dd($request);
+        if ($request->has('cari')) {
+            $data_siswa = Siswa::where('first_name', 'LIKE', '%' . $request->cari . '%')->get();
+        } else {
+            $data_siswa = \App\Siswa::all();
+        }
         // selain compact, boleh guna ['data_siswa' => $data_siswa]
         return view('siswa.index', compact('data_siswa'));
     }
@@ -103,6 +108,9 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $siswa = Siswa::find($id);
+        $siswa->delete();
+
+        return redirect('/siswa')->with('success', 'Data berjaya dihapus');
     }
 }
