@@ -34,15 +34,15 @@
                                 @foreach ($data_siswa as $ds)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $ds->first_name }}</td>
-                                    <td>{{ $ds->last_name }}</td>
+                                    <td><a href="/siswa/{{ $ds->id }}/profile">{{ $ds->first_name }}</a></td>
+                                    <td><a href="/siswa/{{ $ds->id }}/profile">{{ $ds->last_name }}</a></td>
                                     <td>{{ $ds->gender }}</td>
                                     <td>{{ $ds->age }}</td>
                                     <td>{{ $ds->religion }}</td>
                                     <td>{{ $ds->address }}</td>
                                     {{-- href->guna blade template untuk catch dynamic id --}}
                                     <td><a href="/siswa/{{ $ds->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="/siswas/{{ $ds->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Adakah mahu didelete data ini?')">Delete</a>
+                                    <a href="/siswa/{{ $ds->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Adakah mahu didelete data ini?')">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -69,7 +69,7 @@
         </div>
         <div class="modal-body">
                 <form action="/siswa/create" method="post">
-                    @csrf
+                    {{ csrf_field() }}
                     <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="First Name" name="first_name">
@@ -78,6 +78,11 @@
                     <label for="last_name">Last Name</label>
                     <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Last Name" name="last_name">
                     </div>
+                    <div class="form-group">
+                    <label for="last_name">Email</label>
+                    <input type="email" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Email" name="email">
+                    </div>
+
                     <div class="form-group">
                         <label for="gender">Select Gender</label>
                             <select class="form-control" id="gender" name="gender">

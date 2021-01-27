@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SiswaController;
+use App\Http\Middleware\RoleCheck;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,11 +25,15 @@ Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('/logout', 'AuthController@logout');
 
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', 'DashboardController@index');
+Route::group(['middleware' => ['auth', 'roleCheck:admin']], function () {
     Route::get('/siswa', 'SiswaController@index');
     Route::post('/siswa/create', 'SiswaController@create');
     Route::get('/siswa/{id}/edit', 'SiswaController@edit');
     Route::post('/siswa/{id}/update', 'SiswaController@update');
     Route::get('/siswa/{id}/delete', 'SiswaController@destroy');
+    Route::get('/siswa/{id}/profile', 'SiswaController@profile');
+});
+
+Route::group(['middleware' => ['auth', 'roleCheck:admin,siswa']], function () {
+    Route::get('/dashboard', 'DashboardController@index');
 });

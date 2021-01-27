@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Siswa;
 
+// update in Laravel 6, https://stackoverflow.com/questions/58163406/after-upgrading-laravel-from-5-6-to-6-0-call-to-undefined-str-random-function
+use Illuminate\Support\Str;
+
 class SiswaController extends Controller
 {
     /**
@@ -32,7 +35,19 @@ class SiswaController extends Controller
     public function create(Request $request)
     {
         // line below after using use in line 6
-        Siswa::create($request->all());
+
+        //Insert ke table user
+        $user = new \App\User;
+        $user->role = 'siswa';
+        $user->name = $request->first_name;
+        $user->email = $request->email;
+        $user->password = bcrypt('pass');
+        $user->remember_token = Str::random(60);
+        $user->save();
+
+        // Insert ke table siswa
+        $request->request->add(['user_id' => $user->id]);
+        $siswa = Siswa::create($request->all());
         return redirect('/siswa')->with('success', 'Data berhasil ditambah!');
     }
 
@@ -94,8 +109,16 @@ class SiswaController extends Controller
         //         'address' => $request->address
         //     ]);
 
+        // untuk lihat hasil bila submit data
+        // dd($request->all());
+
         $siswa = Siswa::find($id);
         $siswa->update($request->all());
+        if ($request->hasFile('avatar')) {
+            $request->file('avatar')->move('img/', $request->file('avatar')->getClientOriginalName());
+            $siswa->avatar = $request->file('avatar')->getClientOriginalName();
+            $siswa->save();
+        }
 
         return redirect('/siswa')->with('success', 'Data berjaya diupdate!');
     }
@@ -112,5 +135,11 @@ class SiswaController extends Controller
         $siswa->delete();
 
         return redirect('/siswa')->with('success', 'Data berjaya dihapus');
+    }
+
+    public function profile($id)
+    {
+        $siswa = Siswa::find($id);
+        return view('siswa.profile', compact('siswa')); //pass data $siswa -> profile.blade.php
     }
 }

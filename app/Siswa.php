@@ -10,5 +10,14 @@ class Siswa extends Model
     // kita bagitau laravel, ini nama table kita
     protected $table = 'siswa';
 
-    protected $fillable = ['first_name', 'last_name', 'gender', 'age', 'religion', 'address'];
+    protected $fillable = ['first_name', 'last_name', 'gender', 'age', 'religion', 'address', 'avatar', 'user_id'];
+
+    public function getAvatar()
+    {
+        if (!$this->avatar) {
+            return asset('img/default.jpg'); //asset() helper documentation
+        } else {
+            return asset('img/' . $this->avatar);
+        }
+    }
 }
