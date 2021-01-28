@@ -20,4 +20,10 @@ class Siswa extends Model
             return asset('img/' . $this->avatar);
         }
     }
+
+    //siswa related->mapel, so nama as below
+    public function mapel()
+    {
+        return $this->belongsToMany(Mapel::class)->withPivot(['value']);
+    }
 }
