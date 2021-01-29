@@ -68,39 +68,79 @@
             </button>
         </div>
         <div class="modal-body">
-                <form action="/siswa/create" method="post">
+            {{-- enctype->multipart/form data untuk upload gambar --}}
+                <form action="/siswa/create" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                     <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="First Name" name="first_name">
+                    <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="First Name" name="first_name" value="{{old('first_name')}}">
+                    @if($errors->has('first_name'))
+                    <span class="help-block">
+                        {{$errors->first('first_name')}}
+                    </span>
+                    @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
                     <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Last Name" name="last_name">
+                    <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Last Name" name="last_name" value="{{old('last_name')}}">
+                    @if($errors->has('last_name'))
+                    <span class="help-block">
+                        {{$errors->first('last_name')}}
+                    </span>
+                    @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     <label for="last_name">Email</label>
-                    <input type="email" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Email" name="email">
+                    <input type="email" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Email" name="email" value="{{old('email')}}">
+                    @if($errors->has('email'))
+                    <span class="help-block">
+                        {{$errors->first('email')}}
+                    </span>
+                    @endif
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                         <label for="gender">Select Gender</label>
                             <select class="form-control" id="gender" name="gender">
-                            <option value="L">Lelaki</option>
-                            <option value="P">Perempuan</option>
+                            <option value="L" {{(old('gender') == 'L') ? 'selected' : ' '}}>Lelaki</option>
+                            <option value="P" {{(old('gender') == 'P') ? 'selected' : ' '}}>Perempuan</option>
                             </select>
+                            @if($errors->has('gender'))
+                            <span class="help-block">
+                                {{$errors->first('gender')}}
+                            </span>
+                            @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('age') ? 'has-error' : '' }}">
                     <label for="age">Age</label>
-                    <input type="text" class="form-control" id="age" aria-describedby="emailHelp" placeholder="Age" name="age">
+                    <input type="text" class="form-control" id="age" aria-describedby="emailHelp" placeholder="Age" name="age" value="{{old('age')}}">
+                    @if($errors->has('age'))
+                    <span class="help-block">
+                        {{$errors->first('age')}}
+                    </span>
+                    @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('religion') ? 'has-error' : '' }}">
                     <label for="religion">Religion</label>
-                    <input type="text" class="form-control" id="religion" aria-describedby="emailHelp" placeholder="Religion" name="religion">
+                    <input type="text" class="form-control" id="religion" aria-describedby="emailHelp" placeholder="Religion" name="religion" value="{{old('religion')}}">
+                    @if($errors->has('religion'))
+                    <span class="help-block">
+                        {{$errors->first('religion')}}
+                    </span>
+                    @endif
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <textarea class="form-control" id="address" rows="3" name="address"></textarea>
+                        <textarea class="form-control" id="address" rows="3" name="address">{{old('address')}}</textarea>
+                    </div>
+                    <div class="form-group {{ $errors->has('avatar') ? 'has-error' : '' }}">
+                        <label for="address">Avatar</label>
+                        <input type="file" name="avatar" class="form-control">
+                        @if($errors->has('avatar'))
+                    <span class="help-block">
+                        {{$errors->first('avatar')}}
+                    </span>
+                    @endif
                     </div>
                 </div>
                 <div class="modal-footer">
