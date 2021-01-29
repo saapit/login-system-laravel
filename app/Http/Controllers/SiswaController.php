@@ -157,6 +157,23 @@ class SiswaController extends Controller
     public function profile($id)
     {
         $siswa = Siswa::find($id);
-        return view('siswa.profile', compact('siswa')); //pass data $siswa -> profile.blade.php
+        $matapelajaran = \App\Mapel::all();
+        // dd($mapel);
+        return view('siswa.profile', compact('siswa', 'matapelajaran')); //pass data $siswa, $matapelajaran -> profile.blade.php
+    }
+
+    public function addnilai(Request $request, $idsiswa)
+    {
+        // dd($request->all());
+        $siswa = \App\Siswa::find($idsiswa);
+        if ($siswa->mapel()->where('mapel_id', $request->mapel)->exists()) {
+            return redirect('siswa/' . $idsiswa . '/profile')->with('error', 'Data matapelajaran sudah ada');
+        }
+        //masukkan ke pivot
+        $siswa->mapel()->attach($request->mapel, [
+            'value' => $request->value
+        ]);
+
+        return redirect('siswa/' . $idsiswa . '/profile')->with('success', 'Data value berjaya dimasukkan');
     }
 }

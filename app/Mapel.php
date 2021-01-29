@@ -13,6 +13,6 @@ class Mapel extends Model
     public function siswa()
     {
         // relation between siswa dan mapel
-        return $this->belongsToMany(Siswa::class)->withPivot(['value']);
+        return $this->belongsToMany(Siswa::class)->withPivot(['value'])->withTimestamps();
     }
 }
