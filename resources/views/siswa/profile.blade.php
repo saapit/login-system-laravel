@@ -26,7 +26,7 @@
     <div class="profile-header">
         <div class="overlay"></div>
         <div class="profile-main">
-            <img src="{{ $siswa->getAvatar() }}" class="img-circle" alt="Avatar" >
+            <img src="{{ $siswa->getAvatar() }}" class="img-circle" alt="Avatar" width="90" height="90">
             <h3 class="name">{{ $siswa->first_name }}</h3>
             <span class="online-status status-available">Available</span>
         </div>
@@ -47,7 +47,7 @@
     <!-- END PROFILE HEADER -->
 
     <!-- PROFILE DETAIL -->
-    <div class="profile-detail">
+    <div class="panel-profile">
         <div class="profile-info">
             <h4 class="heading">Detail</h4>
             <ul class="list-unstyled list-justify">
@@ -59,8 +59,9 @@
         </div>
 
             <div class="text-center"><a href="/siswa/{{ $siswa->id }}/edit" class="btn btn-primary">Edit Profile</a></div>
-    </div>
     <!-- END PROFILE DETAIL -->
+</div>
+{{-- END PANEL --}}
 </div>
 <!-- END LEFT COLUMN -->
 
@@ -92,6 +93,12 @@
             </table>
         </div>
     </div>
+
+    <div class="panel">
+        <div id="chartValue">
+
+        </div>
+    </div>
 </div>
 {{-- END TABLE MATA PELAJARAN --}}
 
@@ -103,7 +110,6 @@
     </div>
     <!-- END MAIN CONTENT -->
 </div>
-@stop
 
 
 <!-- Modal -->
@@ -113,7 +119,7 @@
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Tambah Nilai</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
@@ -135,14 +141,58 @@
                 {{$errors->first('value')}}
             </span>
             @endif
-            </div>
+        </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    </div>
 </div>
 </div>
+</div>
+@stop
 
+{{-- ambil dari website highcharts --}}
+@section('footer')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+Highcharts.chart('chartValue', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Laporan Nilai Siswa'
+    },
+    xAxis: {
+        // cara nak view kan json !!..!!
+        categories: {!!json_encode($categories)!!},
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Value'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Value',
+        data: {!!json_encode($data)!!}
+    }]
+});
+</script>
+@stop
