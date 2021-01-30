@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('header')
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+@stop
 @section('content')
 
 <div class="main">
@@ -80,14 +82,17 @@
         <div class="panel-body">
             <table class="table table-striped">
                 <thead>
-                    <tr><th>CODE</th><th>NAME</th><th>SEMESTER</th><th>VALUE</th></tr>
+                    <tr><th>CODE</th><th>NAME</th><th>SEMESTER</th><th>VALUE</th><th>ACTION</th></tr>
                 </thead>
                 <tbody>
                     @foreach($siswa->mapel as $mapel)
-                    <tr><td>{{ $mapel->code }}</td>
+                    <tr>
+                        <td>{{ $mapel->code }}</td>
                         <td>{{ $mapel->name }}</td>
                         <td>{{ $mapel->semester }}</td>
-                        <td>{{ $mapel->pivot->value }}</td></tr>
+                        <td><a href="#" class="value" data-type="text" data-pk="{{ $mapel->id }}" data-url="/api/siswa/{{$siswa->id}}/editvalue" data-title="Masukkan value">{{ $mapel->pivot->value }}</a></td>
+                        <td> <a href="/siswa/{{ $siswa->id }}/{{ $mapel->id }}/deletevalue" class="btn btn-danger btn-sm" onclick="return confirm('Adakah mahu delete data ini?')">Delete</a></td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -155,6 +160,8 @@
 
 {{-- ambil dari website highcharts --}}
 @section('footer')
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script>
 Highcharts.chart('chartValue', {
@@ -194,5 +201,10 @@ Highcharts.chart('chartValue', {
         data: {!!json_encode($data)!!}
     }]
 });
+
+$(document).ready(function() {
+        $('.value').editable();
+    });
+
 </script>
 @stop
