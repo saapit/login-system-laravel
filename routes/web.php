@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'roleCheck:admin']], function () {
     Route::get('/siswa/{id}/profile', 'SiswaController@profile');
     Route::post('/siswa/{id}/addnilai', 'SiswaController@addnilai');
     Route::get('/siswa/{id}/{idmapel}/deletevalue', 'SiswaController@deletevalue');
+    Route::get('/guru/{id}/profile', 'GuruController@profile');
 });
 
 Route::group(['middleware' => ['auth', 'roleCheck:admin,siswa']], function () {

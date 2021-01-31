@@ -82,7 +82,13 @@
         <div class="panel-body">
             <table class="table table-striped">
                 <thead>
-                    <tr><th>CODE</th><th>NAME</th><th>SEMESTER</th><th>VALUE</th><th>ACTION</th></tr>
+                    <tr><th>CODE</th>
+                        <th>NAME</th>
+                        <th>SEMESTER</th>
+                        <th>GURU</th>
+                        <th>VALUE</th>
+                        <th>ACTION</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach($siswa->mapel as $mapel)
@@ -90,6 +96,7 @@
                         <td>{{ $mapel->code }}</td>
                         <td>{{ $mapel->name }}</td>
                         <td>{{ $mapel->semester }}</td>
+                        <td><a href="/guru/{{ $mapel->guru_id }}/profile">{{ $mapel->guru->name }}</a></td>
                         <td><a href="#" class="value" data-type="text" data-pk="{{ $mapel->id }}" data-url="/api/siswa/{{$siswa->id}}/editvalue" data-title="Masukkan value">{{ $mapel->pivot->value }}</a></td>
                         <td> <a href="/siswa/{{ $siswa->id }}/{{ $mapel->id }}/deletevalue" class="btn btn-danger btn-sm" onclick="return confirm('Adakah mahu delete data ini?')">Delete</a></td>
                     </tr>
