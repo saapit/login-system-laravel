@@ -27,6 +27,7 @@
                                     <th>AGE</th>
                                     <th>RELIGION</th>
                                     <th>ADDRESS</th>
+                                    <th>AVG VALUE</th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <td>{{ $ds->age }}</td>
                                     <td>{{ $ds->religion }}</td>
                                     <td>{{ $ds->address }}</td>
+                                    <td>{{ $ds->avgvalue() }}</td>
                                     {{-- href->guna blade template untuk catch dynamic id --}}
                                     <td><a href="/siswa/{{ $ds->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
                                     <a href="/siswa/{{ $ds->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Adakah mahu didelete data ini?')">Delete</a>

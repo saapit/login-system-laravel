@@ -26,4 +26,23 @@ class Siswa extends Model
     {
         return $this->belongsToMany(Mapel::class)->withPivot(['value']);
     }
+
+    //custom
+    public function avgvalue()
+    {
+        $total = 0;
+        $sum = 0;
+        // ambil nilai2 / this adalah memanggil object Siswa
+        foreach ($this->mapel as $mapel) {
+            // $total = $total + $mapel->pivot->value; // option
+            $total +=  $mapel->pivot->value;
+            $sum++;
+        }
+        return round($total / $sum);
+    }
+
+    public function fullname()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

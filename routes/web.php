@@ -38,5 +38,5 @@ Route::group(['middleware' => ['auth', 'roleCheck:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'roleCheck:admin,siswa']], function () {
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboards', 'DashboardController@index');
 });
